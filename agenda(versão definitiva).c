@@ -3,9 +3,14 @@
 #include <string.h>
 
 struct _pessoa{
-	char Nome[100];
-	char telefone[15];
-	char email[120];
+    char Registro[10];   
+	char Nome[50];
+	char Telefone[20];
+	char Email[30];
+	float p1;
+	float p2;
+	float p3;
+	float Media;
 
 };
 
@@ -66,19 +71,44 @@ void gravaAgenda(agenda g){
 void inserep(agenda g){
 	
 	fflush(stdin);
+	puts("insira o Registro da pessoa:");
+	fgets(g.cadastrados[g.n].Registro, 10, stdin);
+	tiraLinha(g.cadastrados[g.n].Registro);
+	
 	puts("insira o Nome da pessoa:");
-	fgets( g.cadastrados[g.n].Nome, 100, stdin );
+	fgets( g.cadastrados[g.n].Nome, 50, stdin );
 	tiraLinha(g.cadastrados[g.n].Nome);
+	
 	puts("insira o telefone da pessoa:");
-	fgets( g.cadastrados[g.n].telefone, 50, stdin );
-	tiraLinha(g.cadastrados[g.n].telefone);
+	fgets( g.cadastrados[g.n].Telefone, 20, stdin );
+	tiraLinha(g.cadastrados[g.n].Telefone);
+	
 	puts("insira o email da pessoa:");
-	fgets( g.cadastrados[g.n].email, 120, stdin );
-	tiraLinha(g.cadastrados[g.n].email);
+	fgets( g.cadastrados[g.n].Email, 30, stdin );
+	tiraLinha(g.cadastrados[g.n].Email);
+	
+	puts("insira nota da p1:");
+	scanf("%f", &g.cadastrados[g.n].p1);
+	//tiraLinha(g.cadastrados[g.n].p1);
+	
+	puts("insira nota da p2:");
+	scanf("%f", &g.cadastrados[g.n].p2);
+	//tiraLinha(g.cadastrados[g.n].p2);
+	
+	puts("insira nota da p3:");
+	scanf("%f", &g.cadastrados[g.n].p3);
+	//tiraLinha(g.cadastrados[g.n].p3);
+	
 	g.n++;
 	gravaAgenda(g);
 
 }
+
+void Media(agenda g){
+     
+     g.cadastrados[g.n].Media = (g.cadastrados[g.n].p1 + g.cadastrados[g.n].p2 + g.cadastrados[g.n].p3)/3;
+     printf("%f", g.cadastrados[g.n].Media);
+     }
 
 void impritodos(agenda g){
 	//agenda g = lerAgenda();
@@ -89,10 +119,16 @@ void impritodos(agenda g){
 		printf(g.cadastrados[i].Nome);
 		printf("\n");
 		printf("telefone do %d cadastrado:",i+1);
-		printf(g.cadastrados[i].telefone);
+		printf(g.cadastrados[i].Telefone);
 		printf("\n");
 		printf("email do %d cadastrado:",i+1);
-		printf(g.cadastrados[i].email);
+		printf(g.cadastrados[i].Email);
+		printf("\n");
+		printf("registro do %d cadastrado:", i+1);
+		printf(g.cadastrados[i].Registro);
+		printf("\n");
+		printf("media do %d cadastrado:", i+1);
+		printf("%f", g.cadastrados[i].Media);
 		printf("\n");
 	}
 	puts("==========");
@@ -106,10 +142,16 @@ void imprium(int idx){
 	printf(g.cadastrados[idx].Nome);
 	printf("\n");
 	printf("telefone do %d cadastrado:",idx+1);
-	printf(g.cadastrados[idx].telefone);
+	printf(g.cadastrados[idx].Telefone);
 	printf("\n");
 	printf("email do %d cadastrado:",idx+1);
-	printf(g.cadastrados[idx].email);
+	printf(g.cadastrados[idx].Email);
+	printf("\n");
+	printf("registro do %d cadastrado:", idx+1);
+	printf(g.cadastrados[idx].Registro);
+	printf("\n");
+	printf("media do %d cadastrado:", idx+1);
+	printf("%f", g.cadastrados[idx].Media);
 	printf("\n");
 	puts("==========");
 
@@ -136,7 +178,7 @@ int Buscatel(agenda g){
 	fgets(telbusca, 100, stdin );
 	tiraLinha(telbusca);
 	for(i=0;i<g.n; i++){
-		if( stricmp(g.cadastrados[i].telefone, telbusca) == 0){
+		if( stricmp(g.cadastrados[i].Telefone, telbusca) == 0){
 			return i;
 		}
 	}
@@ -149,7 +191,7 @@ int Buscaemail(agenda g){
 	fgets(emailbusca, 100, stdin );
 	tiraLinha(emailbusca);
 	for(i=0;i<g.n; i++){
-		if( stricmp(g.cadastrados[i].email, emailbusca) == 0){
+		if( stricmp(g.cadastrados[i].Email, emailbusca) == 0){
 			return i;
 		}
 	}
@@ -177,7 +219,7 @@ void BBtel(agenda g){
 	int i,j;
 	for(i=0; i<g.n-1; i++ ){
         for(j=0; j<g.n-1; j++ ){
-            if( strcmp(g.cadastrados[j].telefone, g.cadastrados[j+1].telefone) > 0 ){
+            if( strcmp(g.cadastrados[j].Telefone, g.cadastrados[j+1].Telefone) > 0 ){
 				pessoa temp = g.cadastrados[j];
 				g.cadastrados[j] = g.cadastrados[j+1];
 				g.cadastrados[j+1] = temp;
@@ -193,7 +235,7 @@ void BBemail(agenda g){
 	int i,j;
 	for(i=0; i<g.n-1; i++ ){
         for(j=0; j<g.n-1; j++ ){
-            if( strcmp(g.cadastrados[j].email, g.cadastrados[j+1].email) > 0 ){
+            if( strcmp(g.cadastrados[j].Email, g.cadastrados[j+1].Email) > 0 ){
 				pessoa temp = g.cadastrados[j];
 				g.cadastrados[j] = g.cadastrados[j+1];
 				g.cadastrados[j+1] = temp;
